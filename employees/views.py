@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Employee
 from .serializers import EmployeeSerializer
+from django.db.models import Q
 
 # Create your views here.
 
@@ -73,3 +74,17 @@ def delete_employee(reqest, id):
         status=200
     )
     
+
+@api_view(['GET'])
+def search_api(request):
+    keyword=request.GET.get('search')
+
+    employees=Employee.objects.filter(
+        Q(name__icontains=keyword) |
+        Q(designation__icontains=keyword)
+    )
+
+    serializer=EmployeeSerializer(employees,many=True)
+
+
+    return Response(serializer.data)
