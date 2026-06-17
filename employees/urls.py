@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import EmployeeAPIView
+from .views import EmployeeListCreateAPIView
 
 urlpatterns=[
-    path('employee/',EmployeeAPIView.as_view()),
+    path('employee/',EmployeeListCreateAPIView.as_view()),
     
 ]
